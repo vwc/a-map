@@ -332,11 +332,12 @@ html, body {
 .template-flexitopic_map_view #content .documentFirstHeading {
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
-    margin-left: 23px;
+    padding-left: 23px;
     padding-right: 10px;
+    margin-bottom: 10px;
     font-size: 150%;
     font-weight: normal; 
-    color: #2b7c96;
+    color: #2b7c96 !important;
 }
 
 #content h2,
