@@ -306,6 +306,14 @@ html, body {
 
 }
 
+.template-flexitopic_map_view #content h1.documentFirstHeading {
+    color: #414142;
+    font-family: Georgia, sans-serif;
+    background: url(../images/header_icon.png) no-repeat 0 0 transparent;
+
+}
+
+
 #content h1.documentFirstHeading {
     color: #2b7c96;
     font-family: Georgia;
@@ -317,6 +325,16 @@ html, body {
     margin-left: 23px;
     padding-right: 10px;
     font-size: 90%;
+    font-weight: normal; 
+    color: #2b7c96;
+}
+
+.template-flexitopic_map_view #content .documentFirstHeading {
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+    margin-left: 23px;
+    padding-right: 10px;
+    font-size: 150%;
     font-weight: normal; 
     color: #2b7c96;
 }
@@ -336,6 +354,10 @@ padding-top:3px;
 .mapTitle {
 padding-top:3px;
     background: url(../images/header_icon.png) 0px 0px no-repeat transparent;
+}
+
+#flexitopicmap {
+    width: auto !important;
 }
 
 .ov-title {
