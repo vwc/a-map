@@ -141,7 +141,7 @@ html, body {
     height: 250px;
 }
 
-#logo {
+#logo a{
     background: url(../images/logo.png) 0px 0px no-repeat transparent;
     width: 276px;
     height:210px;
@@ -151,32 +151,33 @@ html, body {
     border: none;
 }
 
+
 #search {
-    width: 300px;
     float:right;
-    margin: 10px 10px 0px 0px;
+    border: 10px solid #e3e3e3;
 }
 
 #search-site {
     background: #fff;
-    border: 1px solid #333;
     height: 28px;
-    width: 200px;
+    width: 167px;
     margin: 0px;
 }
 
-#search-site-button {
-    background: #fff;
-    border: 1px solid #333;
+.searchButton {
+    background: url(../images/icon-search.png) no-repeat 0px 0px #fff;
+    border: 0px solid #333;
     color: #000;
-    font-family: Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     font-weight: normal;
     font-size: 0.8em;
     text-transform: uppercase;
-    width: 81px;
-    height: 30px;
-    text-align: right;ddd
-    padding-right: 6px;
+    width: 27px;
+    height: 24px;
+    text-align: right;
+    text-indent: -3000px;
+    overflow: hidden;
+    display: inline-block;
 }
 
 #navigation {
@@ -189,6 +190,7 @@ html, body {
 #nav-head {
     height: 125px;
     border-bottom: 1px solid #999;
+    margin-left: -15px;
 }
 
 #portal-globalnav,
@@ -196,6 +198,7 @@ html, body {
     margin-top:10px;
     border-top: 1px solid #999;
     border-bottom: 1px solid #999;
+    margin-left: -15px;
 }
 #portal-globalnav li {
 }
@@ -206,6 +209,7 @@ html, body {
     font-size: 1.0em;
     color: #999;
     padding: 3px 10px;
+    font-weight:bold;
 }
 
 #portal-globalnav .selected a,
@@ -214,11 +218,6 @@ html, body {
 #main-nav a:hover {
     background: #2b7c96;
     color: White;
-}
-#portal-globalnav .selected a:hover,
-#main-nav .selected a:hover {
-    background: #ddd;
-    color: #205c90;
 }
 
 #social-connection {
@@ -257,6 +256,18 @@ html, body {
 
 /* @group Splash Boxes */
 
+#rightbar {
+    margin-top: 57px;
+}
+
+#portlets {
+    margin-top: 40px;
+}
+
+#portlets .portletStaticText p {
+ text-align: center;
+}
+
 .splashBox {
     padding: 10px 5px;
     margin-bottom: 5px;
@@ -288,9 +299,26 @@ html, body {
 	margin-top: 0.5em;
 }
 
-#content h1.documentFirstHeading {
+.template-kml-openlayers #content h1.documentFirstHeading {
     color: #414142;
     font-family: Georgia, sans-serif;
+    background: url(../images/header_icon.png) no-repeat 0 0 transparent;
+
+}
+
+#content h1.documentFirstHeading {
+    color: #2b7c96;
+    font-family: Georgia;
+}
+
+.template-kml-openlayers #content h1 span {
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+    margin-left: 23px;
+    padding-right: 10px;
+    font-size: 90%;
+    font-weight: normal; 
+    color: #2b7c96;
 }
 
 #content h2,
@@ -1116,7 +1144,10 @@ dl.actionMenu.activated dd div {
 
 /* @end */
 
-
+#chicken_contentDiv h2 {
+    border-bottom: 1px solid #e3e3e3;
+    margin-bottom: 5px;
+}
 
 /* @group Footer */
 
@@ -1136,7 +1167,7 @@ border: 1px solid white;
 	color: White;
 	background: #2b7c96;
 	font-family: Georgia, Helvetica, FreeSans, sans-serif;
-	padding: 0.5em 0;
+	padding: 0.7em 0;
 }
 
 #footer-info {
@@ -1148,7 +1179,16 @@ border: 1px solid white;
 	font-size: 0.7em;
 }
 
+#footer-nav {
+    text-align:right;
+}
 
+#footer-nav li a {
+    color: #FFF;
+    font-size:70%;
+    padding: 0 5px;
+    font-weight:bold;
+}
 /* @end */
 
 /* @group Invisibles */
