@@ -141,7 +141,7 @@ html, body {
     height: 250px;
 }
 
-#logo a{
+#logo {
     background: url(../images/logo.png) 0px 0px no-repeat transparent;
     width: 276px;
     height:210px;
@@ -151,7 +151,17 @@ html, body {
     border: none;
 }
 
-
+#foerderleiste {
+    background: url(../images/foerderlogoleiste.png) 0px 0px no-repeat transparent;
+    margin-top: 15px;
+    float:left;
+    width: 960px;
+    height: 162px;
+    display:block;
+    text-indent: -3000px;
+    overflow:hidden;
+    border:none;
+}
 #search {
     float:right;
     border: 10px solid #e3e3e3;
