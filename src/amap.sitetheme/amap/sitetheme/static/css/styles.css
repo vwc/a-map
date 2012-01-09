@@ -152,15 +152,51 @@ html, body {
 }
 
 #foerderleiste {
-    background: url(../images/foerderlogoleiste.png) 0px 0px no-repeat transparent;
+ /*   background: url(../images/foerderlogoleiste.png) 0px 0px no-repeat transparent;*/
     margin-top: 15px;
     float:left;
-    width: 960px;
+    width: 940px;
     height: 162px;
     display:block;
-    text-indent: -3000px;
     overflow:hidden;
     border:none;
+}
+
+#foerderleiste hr {
+    background-color: #32438b; /* Farbe für Opera und Firefox */ 
+    color: #32438b; /* Farbe für Internet Explorer (IE) */
+    border: 0; 
+    height: 2px;
+    
+}
+.leiste td {
+    height:70px;
+
+
+}
+
+.leiste a{
+    height:70px;
+    display:block;
+    text-indent: -3000px;
+    overflow: hidden;
+    border: none;
+}
+#BMFJA {
+    background: url(../images/BMFJA.png) 0px 0px no-repeat transparent;
+    width:150px;
+}
+#esf {
+    background: url(../images/ESF.png) 0px 0px no-repeat transparent;
+    width:180px;
+}
+#staerken {
+    background: url(../images/StaerkenvorOrt.png) 0px 0px no-repeat transparent;
+    width:250px;
+}
+#eu {
+    background: url(../images/eu.png) 0px 0px no-repeat transparent;
+    width:200px;
 }
 #search {
     float:right;
