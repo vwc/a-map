@@ -26,19 +26,27 @@ from collective.z3cform.datagridfield import DataGridFieldFactory, DictRow
 # Interface class; used to define content-type schema.
 
 class ITableRowSchema(form.Schema, Interface):
-    one = schema.TextLine(title=u"Ansprechpartner")
-    two = schema.TextLine(title=u"Strasse")
-    three = schema.TextLine(title=u"sontiges")
-
+    one = schema.TextLine(title=u"Ansprechpartner", required=False)
+    two = schema.TextLine(title=u"Strasse", required=False)
+    three = schema.TextLine(title=u"Ort", required=False)
+    four = schema.TextLine(title=u"Tel.", required=False)
+    five = schema.TextLine(title=u"Fax", required=False)
+    six = schema.TextLine(title=u"Email", required=False)
                                  
 class IInstitution(form.Schema, IImageScaleTraversable):
     """
     single institution
     """
 
+    title = schema.TextLine(title=u"Einrichtung")
+    description = schema.Text(title=u"Aufgaben")
+
     form.widget(table=DataGridFieldFactory) 
  
-    table = schema.List(title=_(u"My Table"), value_type=DictRow(title=_(u"The tablerow"), schema=ITableRowSchema))   
+    table = schema.List(title=_(u"Kontakt"), 
+                        value_type=DictRow(title=_(u"The tablerow"),
+                                           schema=ITableRowSchema, )
+                        )   
 
     form.model("models/institution.xml")
 

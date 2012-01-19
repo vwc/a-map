@@ -28,6 +28,13 @@ setup(name='amap.mapview',
           'setuptools',
           'plone.app.dexterity',
           'plone.namedfile [blobs]',
+          'plone.behavior',
+          'plone.directives.form',
+          'zope.schema',
+          'zope.interface',
+          'zope.component',
+          'rwproperty',
+                  
           # -*- Extra requirements: -*-
       ],
       entry_points="""
