@@ -1,0 +1,10 @@
+Index: collective/geo/geographer/geo.py
+===================================================================
+--- collective/geo/geographer/geo.py	(revision 248015)
++++ collective/geo/geographer/geo.py	(working copy)
+@@ -48,4 +48,4 @@
+         self.geo['type'] = type
+         self.geo['coordinates'] = coordinates
+         self.geo['crs'] = crs
+-        notify(ObjectGeoreferencedEvent(self.context))
++        #notify(ObjectGeoreferencedEvent(self.context))
