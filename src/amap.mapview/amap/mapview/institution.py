@@ -3,6 +3,7 @@ from plone.directives import dexterity, form
 
 from zope.interface import Interface
 from zope import schema
+from plone.indexer.decorator import indexer
 
 
 from z3c.form import field
@@ -39,6 +40,49 @@ class IInstitution(form.Schema, IImageScaleTraversable):
     description = schema.Text(
         title=u"Aufgaben",
     )
+
+    job1 = schema.Text(
+        title=u"Was wir an Aufgaben anbieten",
+        required=False,
+    )
+
+    job2 = schema.TextLine(
+        title=u"Was du an Wochenstunden mitbringen solltest",
+        required=False,
+    )
+
+    partner = schema.TextLine(
+        title=u"Ansprechpartner:",
+    )
+
+    street = schema.TextLine(
+        title=u"Strasse:",
+    )
+
+    location = schema.TextLine(
+        title=u"Plz und Ort:",
+    )
+    
+    phone = schema.TextLine(
+        title=u"Tel.:",
+        required=False,
+    )
+    
+    fax = schema.TextLine(
+        title=u"Fax:",
+        required=False,
+    )
+    
+    email = schema.TextLine(
+        title=u"E-Mail:",
+        required=False,
+    )
+    
+    website = schema.TextLine(
+        title=u"Website:",
+        required=False,
+    )
+
 
     form.widget(contactdetails=DataGridFieldFactory)
     contactdetails = schema.List(
@@ -102,3 +146,10 @@ class EditForm(form.EditForm):
     label=u"Demo Usage of DataGridField"
 
     fields['contactdetails'].widgetFactory = DataGridFieldFactory
+    
+@indexer(IInstitution)
+def searchableIndexer(context):
+    keywords = " ".join(context.keywords)
+    return "%s %s %s" % (context.title, context.description, keywords)
+
+grok.global_adapter(searchableIndexer, name="SearchableText")

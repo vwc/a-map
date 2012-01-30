@@ -71,6 +71,7 @@ a:visited:hover {
 
 dt {
 	font-weight: bold;
+	color: #414142;
 }
 input {
 	font-family: "Lucida Grande", Arial, FreeSans;
@@ -565,9 +566,14 @@ dl.portlet ol {
 #description {
 	color: #535353 !important;
 	font: Arial, FreeSans, sans-serif !important;
+	font-style: italic;
 	margin-left: 0;
 	line-height: 110%;
 	font-weight: bold;
+}
+
+#content .documentDescription{
+	font-style: italic;
 }
 
 #content img.tileImage,

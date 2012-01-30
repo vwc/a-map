@@ -52,9 +52,9 @@
 	        <replace css:content-children="#content" css:theme-children="#content" />
 	        <copy css:content="#edit-bar" css:theme="#editbar" />
 	        <before css:content=".portalMessage" css:theme="#content" />
+	        <drop css:content=".documentActions" />
 	        
 	        <replace css:content-children="#portal-column-two > *" css:theme-children="#portlets" />
-            <drop css:content="#viewlet-below-content-body" />
 	        <rules css:if-content="body.section-front-page-1">
 	            <replace css:content="#gallery-wrapper" css:theme-children="#main-content" />
 	            <replace css:content="#intro-text" css:theme="#intro-text" />
