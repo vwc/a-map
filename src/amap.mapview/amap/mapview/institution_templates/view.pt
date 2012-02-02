@@ -27,7 +27,7 @@
     </tal:block>
     <tal:block tal:condition="context/job2">
         <b>Aufwand an Wochenstunden: </b>
-        <p tal:condition="context/job2" tal:content="context/job2">job</p>
+        <p tal:content="context/job2">job</p>
     </tal:block>
     <div id="instituition-contact">
         <div id="contact-person">
