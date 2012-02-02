@@ -47,9 +47,9 @@
                         <a href="" tal:define="email context/email" tal:attributes="href string:mailto: $email" tal:content="email">Email</a>
                    </p>
                    </tal:block>
-                   <tal:block tal:condition="context/fax">
+                   <tal:block tal:condition="context/website">
                    <p tal:define="web context/website">Website: 
-                        <a href="" tal:attributes="href web" tal:content="web">Website</a>
+                        <a href="" tal:attributes="href string:http://$web" tal:content="web">Website</a>
                    </p>
                    </tal:block>
                 </div>
