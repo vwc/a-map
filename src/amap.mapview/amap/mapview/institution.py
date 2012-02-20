@@ -40,10 +40,12 @@ class IInstitution(form.Schema, IImageScaleTraversable):
 
     description = schema.Text(
         title=u"Einleittext bei Kartenansicht",
+        required=False,
     )
 
     summary = schema.Text(
         title=u"Aufgaben:",
+        required=False,
     )
 
     job1 = schema.Text(
