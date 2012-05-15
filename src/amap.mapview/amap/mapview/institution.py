@@ -13,12 +13,18 @@ from plone.namedfile.interfaces import IImageScaleTraversable
 from z3c.form.interfaces import IDataConverter, NO_VALUE
 from z3c.form.converter import BaseDataConverter
 from zope.schema import getFieldsInOrder
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 from amap.mapview import MessageFactory as _
 
 # from collective.z3cform.datagridfield import DictRow
 # from collective.z3cform.datagridfield import DataGridFieldFactory, IDataGridField
 
+KEYWORD_VOCAB = SimpleVocabulary(
+    [SimpleTerm(value=u'church', title=_(u'Kirche')),
+     SimpleTerm(value=u'sport', title=_(u'Sport')),
+     SimpleTerm(value=u'institution', title=_(u'Einrichtung'))]
+    )
 
 class ITableRowSchema(form.Schema, Interface):
     one = schema.TextLine(title=u"Ansprechpartner", required=False)
@@ -66,6 +72,11 @@ class IInstitution(form.Schema, IImageScaleTraversable):
         title=u"Strasse:",
     )
 
+    organizer = schema.Choice(
+            title=_(u"Art der Einrichtung"),
+            vocabulary=KEYWORD_VOCAB,
+    )
+    
     location = schema.TextLine(
         title=u"Plz und Ort:",
     )
