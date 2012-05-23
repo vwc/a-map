@@ -17,7 +17,7 @@ from plone.app.textfield import RichText
 
 from z3c.relationfield.schema import RelationList, RelationChoice
 from plone.formwidget.contenttree import ObjPathSourceBinder
-from amap.mapview.Instiution import IInstituition
+from amap.mapview.institution import IInstitution
 
 from amap.mapview import MessageFactory as _
 
@@ -26,7 +26,7 @@ from amap.mapview import MessageFactory as _
 
 class IInstFolder(form.Schema, IImageScaleTraversable):
     """
-    Folder for Instiutions
+    Folder for Institutions
     """
     
     # If you want a schema-defined interface, delete the form.model

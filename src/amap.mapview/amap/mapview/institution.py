@@ -26,15 +26,6 @@ KEYWORD_VOCAB = SimpleVocabulary(
      SimpleTerm(value=u'institution', title=_(u'Einrichtung'))]
     )
 
-class ITableRowSchema(form.Schema, Interface):
-    one = schema.TextLine(title=u"Ansprechpartner", required=False)
-    two = schema.TextLine(title=u"Strasse", required=False)
-    three = schema.TextLine(title=u"Ort", required=False)
-    four = schema.TextLine(title=u"Tel.", required=False)
-    five = schema.TextLine(title=u"Fax", required=False)
-    six = schema.TextLine(title=u"Email", required=False)
-
-
 class IInstitution(form.Schema, IImageScaleTraversable):
     """
     single institution
