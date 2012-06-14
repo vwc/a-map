@@ -1,5 +1,7 @@
 from five import grok
 from plone.directives import dexterity, form
+from Acquisition import aq_inner
+from Products.CMFCore.utils import getToolByName
 
 from zope import schema
 from zope.schema.interfaces import IContextSourceBinder
@@ -15,8 +17,10 @@ from plone.namedfile.field import NamedBlobImage, NamedBlobFile
 
 from plone.app.textfield import RichText
 
+from plone.app.contentlisting.interfaces import IContentListing
 from z3c.relationfield.schema import RelationList, RelationChoice
 from plone.formwidget.contenttree import ObjPathSourceBinder
+
 from amap.mapview.institution import IInstitution
 
 from amap.mapview import MessageFactory as _
@@ -59,17 +63,34 @@ class InstFolder(dexterity.Container):
 # of this type by uncommenting the grok.name line below or by
 # changing the view class name and template filename to View / view.pt.
 
-class SampleView(grok.View):
+class View(grok.View):
     grok.context(IInstFolder)
     grok.require('zope2.View')
-    # grok.name('view')
+    grok.name('view')
+
+    def hasSubitems(self):
+        return len(self.subitems()) > 0
 
     def subitems(self):
         context = aq_inner(self.context)
         catalog = getToolByName(context, 'portal_catalog')
-        results = catalog(object_provides=IContentish.__identifier__,
-                          path=dict(query='/'.join(context.getPhysicalPath()),
-                                    depth=1),
-                          )
-        results = IContentListing(results)
+        results = catalog(object_provides=IInstitution.__identifier__,
+                          path= '/'.join(context.getPhysicalPath()),
+                          sort_on='sortable_title')
         return results
+
+    def keywords(self):
+        context = aq_inner(self.context)
+        catalog = getToolByName(context, 'portal_catalog')
+        folder_path = '/'.join(context.getPhysicalPath())
+        keywords = context.portal_catalog.searchResults(searchableText = 'welcome')
+        #keywords = [unicode(k, 'utf-8') for k in keywords]
+        return keywords
+    
+    def archive_url(self, subject):
+        # Get the path of where the portlet is created. That's the blog.
+        assignment_context = find_assignment_context(self.data, self.context)
+        self.folder_url = assignment_context.absolute_url()
+        return '%s/%s?category=%s' % (self.folder_url,
+                                      self.data.archive_view,
+                                      subject)

@@ -40,6 +40,7 @@
                     <p tal:define="location context/location" tal:content="location">anprechpartner</p>
                     <p tal:condition="context/phone" tal:define="phone context/phone" tal:content="string:Telefon: $phone">anprechpartner</p>
                     <p tal:condition="context/fax" tal:define="fax context/fax" tal:content="string:Fax: $fax">anprechpartner</p>
+                    <p tal:content="context/organizer" />
                 </div>
             </div>
             <div>

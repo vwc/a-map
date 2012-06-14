@@ -20,8 +20,10 @@
 
   <property name="behaviors">
      <element value="plone.app.content.interfaces.INameFromTitle" />
-     <element value="collective.geo.behaviour.interfaces.ICoordinates" />
      <element value="plone.app.dexterity.behaviors.metadata.ICategorization" />
+<!--
+     <element value="collective.geo.behaviour.interfaces.ICoordinates" />
+-->
    </property>
 
   <!-- View information -->
