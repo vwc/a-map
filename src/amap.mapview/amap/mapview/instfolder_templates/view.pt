@@ -30,12 +30,13 @@
         <ul>
           <tal:keys tal:repeat="key keywords">
             <li>
-              <a href="#" tal:content="key" />
+              <a href="#" tal:content="key" 
+                 tal:define="context_url context/absolute_url" 
+                 tal:attributes="href python:context_url + '/@@view?subject=' + key" />
             </li>
           </tal:keys>
         </ul>
       </section>
-
     </article>
   </metal:content-core>
 </metal:main>

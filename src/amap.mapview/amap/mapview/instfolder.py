@@ -33,7 +33,8 @@ class View(grok.View):
         self.has_subitems = len(self.subitems()) > 0
 
     def institutions(self):
-        pass
+        subjects = self.request.get('subject', None)
+        return self.get_data(subject=subjects)
 
     def subitems(self):
         context = aq_inner(self.context)
@@ -52,9 +53,13 @@ class View(grok.View):
 
     def get_data(self, subject=None):
         context = aq_inner(self.context)
+        catalog = getToolByName(context, 'portal_catalog')
         obj_provides = IInstitution.__identifier__
         path = '/'.join(context.getPhysicalPath())
         query = dict(object_provides=IInstitution.__identifier__,
                      path=dict(query='/'.join(self.context.getPhysicalPath()),
                                depth=1),)
-        pass
+        if subject:
+            query['Subject'] = subject
+        results = catalog(**query)
+        return results
