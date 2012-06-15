@@ -9,12 +9,16 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="content">
-    <div class="documentFirstHeading"><h1 tal:content="context/Title">Title</h1></div>
-    <div class="documentDescription description"><div tal:content="context/summary">Description</div></div>
+    <div class="documentFirstHeading">
+      <h1 tal:content="context/Title">Title</h1>
+    </div>
+    <div class="documentDescription description">
+      <div tal:content="context/summary">Description</div>
+    </div>
     <br>
     <tal:block tal:condition="context/job1">
         <b>Voraussetzungen zur Mitarbeit: </b>
-        <p tal tal:content="context/job1">job</p>
+        <p tal:content="context/job1">job</p>
     </tal:block>
     <tal:block tal:condition="context/job2">
         <b>Aufwand an Wochenstunden: </b>

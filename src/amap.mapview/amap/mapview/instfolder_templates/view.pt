@@ -17,6 +17,13 @@
     <article>
       <h1 class="documentFirstHeading" tal:content="context/Title" />
 
+      <div tal:define="results view/result_listing">
+        <h2>Debugging Code</h2>
+        <tal:block tal:repeat="item results">
+          <span tal:replace="item" />
+        </tal:block>
+      </div>
+
       <div id="map-wrapper">
         <p><strong>Placeholder div for map content</strong></p>
         <metal:use metal:use-macro="context/@@collectivegeo-macros/map-widget" />

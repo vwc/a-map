@@ -5,8 +5,7 @@ from Products.CMFCore.utils import getToolByName
 
 from plone.namedfile.interfaces import IImageScaleTraversable
 
-from plone.app.contentlisting.interfaces import IContentListing
-
+from collective.geo.geographer.interfaces import IGeoreferenced
 from amap.mapview.institution import IInstitution
 
 from amap.mapview import MessageFactory as _
@@ -36,6 +35,19 @@ class View(grok.View):
         subjects = self.request.get('subject', None)
         return self.get_data(subject=subjects)
 
+    def result_listing(self):
+        results = self.institutions()
+        data = []
+        for item in results:
+            obj = item.getObject()
+            geo = IGeoreferenced(obj)
+            coords = geo.coordinates
+            mark = {'location': '%s, %s, 0.000000' % (coords[0], coords[1])}
+            mark['title'] = item.Title
+            mark['description'] = item.Description
+            data.append(mark)
+        return data
+
     def subitems(self):
         context = aq_inner(self.context)
         catalog = getToolByName(context, 'portal_catalog')
@@ -54,8 +66,6 @@ class View(grok.View):
     def get_data(self, subject=None):
         context = aq_inner(self.context)
         catalog = getToolByName(context, 'portal_catalog')
-        obj_provides = IInstitution.__identifier__
-        path = '/'.join(context.getPhysicalPath())
         query = dict(object_provides=IInstitution.__identifier__,
                      path=dict(query='/'.join(self.context.getPhysicalPath()),
                                depth=1),)
