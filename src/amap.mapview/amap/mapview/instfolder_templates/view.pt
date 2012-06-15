@@ -7,32 +7,27 @@
       i18n:domain="amap.mapview">
 <body>
 
-<tal:comment tal:condition="nothing">
-    This is a sample view template. It will not be used for rendering the
-    content unless activated by creation of a view class with a matching name.
-    
-    Note that we're using Plone 4 macros. Replace them with Plone 3 macros
-    if needed.
-</tal:comment>
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <article>
+      <h1 class="documentFirstHeading" tal:content="context/Title" />
 
-<metal:main fill-slot="content-core">
-  <metal:content-core define-macro="content-core">
+      <div id="map-wrapper">
+        <p><strong>Placeholder div for map content</strong></p>
+      </div>
 
-    <h2>
-        MAAAAAAAAAAAAP
-    </h2>
+      <section id="keyword-selector"
+        tal:define="keywords view/keywords">
+        <ul>
+          <tal:keys tal:repeat="key keywords">
+            <li>
+              <a href="#" tal:content="key" />
+            </li>
+          </tal:keys>
+        </ul>
+      </section>
 
-
-    <div tal:content="context/Title">Title inserted here</div>
-    <tal:content tal:condition="view/hasSubitems">
-      <tal:block tal:repeat="item view/subitems">
-        <tal:item tal:define="item_obj item/getObject">
-          <a tal:attributes="href item/getURL"
-           tal:content="item_obj/title" />
-          <p tal:content="view/keywords" />
-        </tal:item>
-      </tal:block>
-    </tal:content>
+    </article>
   </metal:content-core>
 </metal:main>
 
