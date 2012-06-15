@@ -32,6 +32,9 @@ class View(grok.View):
     def update(self):
         self.has_subitems = len(self.subitems()) > 0
 
+    def institutions(self):
+        pass
+
     def subitems(self):
         context = aq_inner(self.context)
         catalog = getToolByName(context, 'portal_catalog')
@@ -46,3 +49,12 @@ class View(grok.View):
         subjects = catalog.uniqueValuesFor('Subject')
         #keywords = [unicode(k, 'utf-8') for k in keywords]
         return subjects
+
+    def get_data(self, subject=None):
+        context = aq_inner(self.context)
+        obj_provides = IInstitution.__identifier__
+        path = '/'.join(context.getPhysicalPath())
+        query = dict(object_provides=IInstitution.__identifier__,
+                     path=dict(query='/'.join(self.context.getPhysicalPath()),
+                               depth=1),)
+        pass
