@@ -7,7 +7,10 @@ from Products.CMFCore.utils import getToolByName
 from plone.namedfile.interfaces import IImageScaleTraversable
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 
+from Products.CMFPlone.interfaces import IPloneSiteRoot
+
 from collective.geo.geographer.interfaces import IGeoreferenced
+from amap.mapview.interfaces import IMapViewLayer
 from amap.mapview.institution import IInstitution
 
 from amap.mapview import MessageFactory as _
@@ -83,15 +86,16 @@ class View(grok.View):
 
 
 class MapKMLView(grok.View):
-    grok.context(IInstFolder)
+    grok.context(IPloneSiteRoot)
     grok.require('zope2.View')
+    grok.layer(IMapViewLayer)
     grok.name('institutionmap.kml')
 
     def title(self):
-        return '<![CDATA[%s]]>' % self.context.Title
+        return '<![CDATA[%s]]>' % self.context.Title()
 
     def description(self):
-        return '<![CDATA[%s]]>' % self.context.Description
+        return '<![CDATA[%s]]>' % self.context.Description()
 
     def get_institutions(self):
         """ Retrieve all information on contained insitutions """

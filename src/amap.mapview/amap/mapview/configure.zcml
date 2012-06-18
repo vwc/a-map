@@ -36,4 +36,8 @@
     permission="zope.Public"
     />
 
+  <adapter
+    for=".interfaces.IMapViewLayer"
+    factory=".maplayer.KMLMapLayers" />
+
 </configure>
