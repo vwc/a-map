@@ -5,6 +5,7 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:grok="http://namespaces.zope.org/grok"
     xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="amap.mapview">
 
   <!-- Include configuration for dependencies listed in setup.py -->
@@ -26,5 +27,13 @@
       />
 
   <!-- -*- extra stuff goes here -*- -->
+
+  <browser:page
+    name="institutionmap-layer"
+    for="*"
+    template="institutionmap_layer.pt"
+    interfaces="interfaces.IInstitutionMapsLayer"
+    permission="zope.Public"
+    />
 
 </configure>

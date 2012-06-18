@@ -80,3 +80,40 @@ class View(grok.View):
             query['Subject'] = subject
         results = catalog(**query)
         return results
+
+
+class MapKMLView(grok.View):
+    grok.context(IInstFolder)
+    grok.require('zope2.View')
+    grok.name('institutionmap.kml')
+
+    def title(self):
+        return '<![CDATA[%s]]>' % self.context.Title
+
+    def description(self):
+        return '<![CDATA[%s]]>' % self.context.Description
+
+    def get_institutions(self):
+        """ Retrieve all information on contained insitutions """
+        results = self.get_data()
+        items = []
+        for r in results:
+            obj = r.getObject()
+            geo = IGeoreferenced(obj)
+            coords = geo.coordinates
+            mark = {'location': '%s, %s, 0.000000' % (coords[0], coords[1])}
+            mark['name'] = r.Title
+            mark['description'] = r.Description
+            items.append(mark)
+        return items
+
+    def get_data(self, subject=None):
+        context = aq_inner(self.context)
+        catalog = getToolByName(context, 'portal_catalog')
+        query = dict(object_provides=IInstitution.__identifier__,
+                     path=dict(query='/'.join(self.context.getPhysicalPath()),
+                               depth=1),)
+        if subject:
+            query['Subject'] = subject
+        results = catalog(**query)
+        return results
