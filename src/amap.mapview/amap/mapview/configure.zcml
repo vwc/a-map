@@ -32,7 +32,7 @@
     name="institutionmap-layer"
     for="*"
     template="institutionmap_layer.pt"
-    interfaces="interfaces.IInstitutionMapsLayer"
+    layer=".interfaces.IMapViewLayer"
     permission="zope.Public"
     />
 
