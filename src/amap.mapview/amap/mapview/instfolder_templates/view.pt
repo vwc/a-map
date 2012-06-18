@@ -36,7 +36,8 @@
         tal:define="keywords view/keywords">
         <ul>
           <tal:keys tal:repeat="key keywords">
-            <li>
+            <li tal:define="klass python:view.keyword_normalizer(key)"
+              tal:attributes="class klass">
               <a href="#" tal:content="key" 
                  tal:define="context_url context/absolute_url" 
                  tal:attributes="href python:context_url + '/@@view?subject=' + key" />

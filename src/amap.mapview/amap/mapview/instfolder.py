@@ -1,9 +1,11 @@
 from five import grok
+from zope.component import getUtility
 from plone.directives import dexterity, form
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 
 from plone.namedfile.interfaces import IImageScaleTraversable
+from plone.i18n.normalizer.interfaces import IIDNormalizer
 
 from collective.geo.geographer.interfaces import IGeoreferenced
 from amap.mapview.institution import IInstitution
@@ -62,6 +64,11 @@ class View(grok.View):
         subjects = catalog.uniqueValuesFor('Subject')
         #keywords = [unicode(k, 'utf-8') for k in keywords]
         return subjects
+
+    def keyword_normalizer(self, keyword):
+        normalizer = getUtility(IIDNormalizer)
+        css_class = 'keyword-%s' % normalizer.normalize(keyword)
+        return css_class
 
     def get_data(self, subject=None):
         context = aq_inner(self.context)
