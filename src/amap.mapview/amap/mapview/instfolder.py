@@ -89,7 +89,7 @@ class MapKMLView(grok.View):
     grok.context(IPloneSiteRoot)
     grok.require('zope2.View')
     grok.layer(IMapViewLayer)
-    grok.name('institutionmap.kml')
+    grok.name('instfoldermap.kml')
 
     def title(self):
         return '<![CDATA[%s]]>' % self.context.Title()

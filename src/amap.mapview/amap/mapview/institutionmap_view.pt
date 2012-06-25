@@ -29,6 +29,19 @@
         <script type="text/javascript"
                 src="++resource++geo.kml.javascripts/kml_openlayers.js"></script>
     </div>
+    <section id="keyword-selector"
+        tal:define="keywords view/keywords">
+        <ul>
+          <tal:keys tal:repeat="key keywords">
+            <li tal:define="klass python:view.keyword_normalizer(key)"
+              tal:attributes="class klass">
+              <a href="#" tal:content="key" 
+                 tal:define="context_url context/absolute_url" 
+                 tal:attributes="href python:context_url + '/@@institutionmap_view?subject=' + key" />
+            </li>
+          </tal:keys>
+        </ul>
+      </section>
     <div tal:replace="structure provider:plone.belowcontentbody" />
   </metal:main>
  </body>

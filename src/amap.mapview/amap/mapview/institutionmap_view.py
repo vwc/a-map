@@ -1,16 +1,18 @@
-from time import time
-from Acquisition import aq_inner
+from Acquisition import aq_inner, aq_parent
 
 from zope.interface import implements
 from zope.component import getUtility
+from zope.component import getMultiAdapter
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
-from plone.memoize import ram
+from plone.memoize import instance
 from plone.registry.interfaces import IRegistry
 
+from plone.i18n.normalizer.interfaces import IIDNormalizer
 from collective.geo.geographer.interfaces import IGeoreferenced
 from amap.mapview.interfaces import IInstitutionsMapView
+from amap.mapview.instfolder import IInstFolder
 from amap.mapview.institution import IInstitution
 
 
@@ -18,6 +20,7 @@ DESC_TEMPLATE = """<![CDATA[<div
 class='user-description'
 dir="ltr">%s</div>]]>
 """
+KEY = 'mapview.filters'
 
 
 class InstitutionsMapMixin(BrowserView):
@@ -34,6 +37,25 @@ class InstitutionsMapMixin(BrowserView):
     def description(self):
         return self.context.Description()
 
+    def filter_params(self):
+        return self.request.get('filter', 'No filters found')
+
+    def wrapped_view(self):
+        context = aq_inner(self.context)
+        return self.get_base_view(context, self.request, 'institutionmap_view')
+
+    def wrapped_view_parent(self):
+        context = aq_inner(self.context)
+        base_view = self.get_base_view(context, self.request,
+                    'institutionmap_view')
+        return base_view.__parent__
+
+    def get_base_view(self, context, request, name):
+        context = aq_inner(context)
+        view = getMultiAdapter((context, request), name=name)
+        view = view.__of__(context)
+        return view
+
 
 class InstitutionsMapView(InstitutionsMapMixin):
     """Kml Users Map View
@@ -42,12 +64,49 @@ class InstitutionsMapView(InstitutionsMapMixin):
 
     def __init__(self, context, request):
         super(InstitutionsMapView, self).__init__(context, request)
+        self.filter = self.request.get('subject', None)
+        self.base_context = aq_inner(self.context)
         self.request.set('disable_border', True)
+
+    def placemarks(self):
+        return self._get_placemarks(subject=self.filter)
+
+    def _get_placemarks(self, subject=None):
+        context = aq_inner(self.context)
+        catalog = getToolByName(context, 'portal_catalog')
+        base_view = self.wrapped_view()
+        view_context = aq_inner(base_view)
+        canonical = getattr(base_view, '__parent__', None)
+        base_path = '/'.join.getPhysicalPath(self.base_context())
+        query = dict(object_provides=IInstitution.__identifier__,
+                     path=dict(query='/'.join(self.context.getPhysicalPath()),
+                               depth=1),)
+        if subject:
+            query['Subject'] = subject
+        results = catalog(**query)
+        import pdb; pdb.set_trace( )
+        return results
+
+    def keywords(self):
+        context = aq_inner(self.context)
+        catalog = getToolByName(context, 'portal_catalog')
+        subjects = catalog.uniqueValuesFor('Subject')
+        #keywords = [unicode(k, 'utf-8') for k in keywords]
+        return subjects
+
+    def keyword_normalizer(self, keyword):
+        normalizer = getUtility(IIDNormalizer)
+        css_class = 'keyword-%s' % normalizer.normalize(keyword)
+        return css_class
 
 
 class InstitutionsMapKMLView(InstitutionsMapMixin):
 
     _user_properties = ['fullname', 'description']
+
+    def __call__(self):
+        self.filters = self.filter_params()
+        return super(InstitutionsMapKMLView, self).__call__()
 
     @property
     def description(self):
@@ -55,7 +114,8 @@ class InstitutionsMapKMLView(InstitutionsMapMixin):
 
     def get_institutions(self):
         """ Retrieve all information on contained insitutions """
-        results = self.get_data()
+        base_view = self.wrapped_view()
+        results = base_view.placemarks()
         items = []
         for r in results:
             obj = r.getObject()
@@ -66,15 +126,5 @@ class InstitutionsMapKMLView(InstitutionsMapMixin):
             desc = r.Description
             mark['description'] = DESC_TEMPLATE % desc
             items.append(mark)
+        import pdb; pdb.set_trace( )
         return items
-
-    def get_data(self, subject=None):
-        context = aq_inner(self.context)
-        catalog = getToolByName(context, 'portal_catalog')
-        query = dict(object_provides=IInstitution.__identifier__,
-                     path=dict(query='/'.join(self.context.getPhysicalPath()),
-                               depth=4),)
-        if subject:
-            query['Subject'] = subject
-        results = catalog(**query)
-        return results
