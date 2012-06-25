@@ -36,8 +36,29 @@
     permission="zope.Public"
     />
 
+  <browser:page
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      name="institutionmap.kml"
+      class=".institutionmap_view.InstitutionsMapKMLView"
+      template="institutionmap_kml.pt"
+      layer=".interfaces.IMapViewLayer"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="Products.CMFCore.interfaces._content.IFolderish"
+      name="institutionmap_view"
+      class=".institutionmap_view.InstitutionsMapView"
+      template="institutionmap_view.pt"
+      layer=".interfaces.IMapViewLayer"
+      permission="zope2.View"
+      />
+
   <adapter
-    for=".interfaces.IMapViewLayer"
+    for=".interfaces.IInstitutionsMapView
+        zope.interface.Interface
+        zope.interface.Interface
+        zope.interface.Interface"
     factory=".maplayer.KMLMapLayers" />
 
 </configure>

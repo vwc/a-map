@@ -9,3 +9,8 @@ class IMapViewLayer(IDefaultPloneLayer):
 
 class IInstitutionMapView(Interface):
     """ Custom layer for our instutution maps view """
+
+
+class IInstitutionsMapView(Interface):
+    """Marker interface for InstitutionsMapView
+    """
