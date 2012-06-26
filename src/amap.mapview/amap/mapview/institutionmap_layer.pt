@@ -1,1 +1,20 @@
-function(){var layer=new OpenLayers.Layer.GML('%s','%s'+'institutionmap.kml',{format:OpenLayers.Format.KML,projection:cgmap.createDefaultOptions().displayProjection,formatOptions:{extractStyles:true,extractAttributes:true}});layer.events.on({"loadend":function(){layer.map.zoomToExtent(layer.getDataExtent());if(layer.features.length>1){layer.map.zoomTo(layer.map.getZoom())}else{layer.map.zoomTo(layer.map.getZoom()-2)}}});return layer}
+function () {
+    var layer=new OpenLayers.Layer.GML('%s','%s'+'institutionmap.kml',
+    {format:OpenLayers.Format.KML,
+    projection:cgmap.createDefaultOptions().displayProjection,
+    formatOptions: {
+        extractStyles:true,
+        extractAttributes:true
+    }
+    });
+    layer.events.on({
+        "loadend":function () {
+            layer.map.zoomToExtent(layer.getDataExtent());
+            if(layer.features.length>1){
+                layer.map.zoomTo(layer.map.getZoom())
+            }
+            else{
+                layer.map.zoomTo(layer.map.getZoom()-2)}}
+    });
+    return layer
+}

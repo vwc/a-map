@@ -3,6 +3,7 @@ from Acquisition import aq_inner, aq_parent
 from zope.interface import implements
 from zope.component import getUtility
 from zope.component import getMultiAdapter
+from zope.annotation.interfaces import IAnnotations
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
@@ -20,7 +21,7 @@ DESC_TEMPLATE = """<![CDATA[<div
 class='user-description'
 dir="ltr">%s</div>]]>
 """
-KEY = 'mapview.filters'
+KEY = 'amap.mapview.filters'
 
 
 class InstitutionsMapMixin(BrowserView):
@@ -38,7 +39,12 @@ class InstitutionsMapMixin(BrowserView):
         return self.context.Description()
 
     def filter_params(self):
-        return self.request.get('filter', 'No filters found')
+        annotations = IAnnotations(self.request)
+        value = annotations.get(KEY, None)
+        if value is None:
+            annotations[KEY] = self.request.get('subject')
+        else:
+            annotations[KEY] = value
 
     def wrapped_view(self):
         context = aq_inner(self.context)
@@ -69,7 +75,9 @@ class InstitutionsMapView(InstitutionsMapMixin):
         self.request.set('disable_border', True)
 
     def placemarks(self):
-        return self._get_placemarks(subject=self.filter)
+        annotations = IAnnotations(self.request)
+        filter_by = annotations[KEY]
+        return self._get_placemarks(subject=filter_by)
 
     def _get_placemarks(self, subject=None):
         context = aq_inner(self.context)
@@ -77,7 +85,7 @@ class InstitutionsMapView(InstitutionsMapMixin):
         base_view = self.wrapped_view()
         view_context = aq_inner(base_view)
         canonical = getattr(base_view, '__parent__', None)
-        base_path = '/'.join.getPhysicalPath(self.base_context())
+        #base_path = '/'.join.getPhysicalPath(self.base_context())
         query = dict(object_provides=IInstitution.__identifier__,
                      path=dict(query='/'.join(self.context.getPhysicalPath()),
                                depth=1),)
@@ -105,7 +113,6 @@ class InstitutionsMapKMLView(InstitutionsMapMixin):
     _user_properties = ['fullname', 'description']
 
     def __call__(self):
-        self.filters = self.filter_params()
         return super(InstitutionsMapKMLView, self).__call__()
 
     @property
@@ -126,5 +133,4 @@ class InstitutionsMapKMLView(InstitutionsMapMixin):
             desc = r.Description
             mark['description'] = DESC_TEMPLATE % desc
             items.append(mark)
-        import pdb; pdb.set_trace( )
         return items

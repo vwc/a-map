@@ -17,8 +17,11 @@ class KMLMapLayer(MapLayer):
         plone_url = plone_view.portal_url()
         if not plone_url.endswith('/'):
             plone_url += '/'
+        context_url = context.absolute_url()
+        if not context_url.endswith('/'):
+            context_url += '/'
         template = context.restrictedTraverse('%s-layer' % self.name)()
-        return template % (title, plone_url)
+        return template % (title, context_url)
 
 
 class KMLMapLayers(MapLayers):

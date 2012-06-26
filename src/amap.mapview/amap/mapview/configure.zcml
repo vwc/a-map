@@ -37,7 +37,7 @@
     />
 
   <browser:page
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces._content.IFolderish"
       name="institutionmap.kml"
       class=".institutionmap_view.InstitutionsMapKMLView"
       template="institutionmap_kml.pt"
