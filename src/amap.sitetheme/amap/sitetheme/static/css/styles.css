@@ -601,6 +601,23 @@ dl.portlet ol {
 
 /* @end */
 
+#venue-mapbox {
+    width: 700px;
+    height: 450px;
+    border: 1px solid #ccc;
+    .center-block();
+    &.mapbox-large {
+        /*.size(500px, 940px);*/
+        width: 500px;
+        height: 400px;
+    }
+    .marker-popup {
+        font-size: 10px;
+        line-height: 110%;
+    }
+    /*.border-radius(4px);*/
+}
+
 /* @group Editing */
 
 /* @group Tabs */

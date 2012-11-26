@@ -4,9 +4,6 @@ from plone.directives import dexterity, form
 from zope import schema
 from plone.indexer.decorator import indexer
 
-
-from z3c.form import field
-
 from plone.namedfile.interfaces import IImageScaleTraversable
 
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
@@ -14,11 +11,16 @@ from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from amap.mapview import MessageFactory as _
 
 
-KEYWORD_VOCAB = SimpleVocabulary(
-    [SimpleTerm(value=u'church', title=_(u'Kirche')),
+marker_types = SimpleVocabulary(
+    [SimpleTerm(value=u'seniors', title=_(u'Seniors')),
      SimpleTerm(value=u'sport', title=_(u'Sport')),
-     SimpleTerm(value=u'institution', title=_(u'Einrichtung'))]
-    )
+     SimpleTerm(value=u'education', title=_(u'Education and Job')),
+     SimpleTerm(value=u'neighborhood', title=_(u"Neighborhood")),
+     SimpleTerm(value=u'social', title=_(u"Social")),
+     SimpleTerm(value=u'culture', title=_(u"Culture and Arts")),
+     SimpleTerm(value=u'services', title=_(u"Services")),
+     SimpleTerm(value=u'youth', title=_(u"Youth")),
+     SimpleTerm(value=u'family', title=_(u"Family"))])
 
 
 class IInstitution(form.Schema, IImageScaleTraversable):
@@ -52,8 +54,8 @@ class IInstitution(form.Schema, IImageScaleTraversable):
         title=u"Strasse:",
     )
     organizer = schema.Choice(
-            title=_(u"Art der Einrichtung"),
-            vocabulary=KEYWORD_VOCAB,
+        title=_(u"Art der Einrichtung"),
+        vocabulary=marker_types,
     )
     location = schema.TextLine(
         title=u"Plz und Ort:",
@@ -76,29 +78,14 @@ class IInstitution(form.Schema, IImageScaleTraversable):
     )
 
 
-class View(grok.View):
-    grok.context(IInstitution)
-    grok.require('zope2.View')
-    grok.name('view')
-
-
-class AddressList(list):
-    pass
-
-
 class Institution(dexterity.Item):
     grok.implements(IInstitution)
 
 
-
-class EditForm(form.EditForm):
-
+class View(grok.View):
     grok.context(IInstitution)
     grok.require('zope2.View')
-    fields = field.Fields(IInstitution)
-    label = u"Demo Usage of DataGridField"
-
-#    fields['contactdetails'].widgetFactory = DataGridFieldFactory
+    grok.name('view')
 
 
 @indexer(IInstitution)

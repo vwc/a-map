@@ -7,7 +7,9 @@
       i18n:domain="amap.mapview">
 
   <metal:block metal:fill-slot="javascript_head_slot">
-    <metal:use metal:use-macro="context/@@collectivegeo-macros/openlayers" />
+    <!--<metal:use metal:use-macro="context/@@collectivegeo-macros/openlayers" />-->
+    <script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.6/mapbox.js'></script>
+    <link href='http://api.tiles.mapbox.com/mapbox.js/v0.6.6/mapbox.css' rel='stylesheet' />
   </metal:block>
 
 <body>
@@ -17,20 +19,30 @@
     <article>
       <h1 class="documentFirstHeading" tal:content="context/Title" />
 
-      <div tal:define="results view/result_listing">
-        <h2>Debugging Code</h2>
-        <tal:block tal:repeat="item results">
-          <span tal:replace="item" />
-        </tal:block>
-      </div>
+      <section id="content-core">
+        <div class="row">
+          <div class="span12" id="venue-map-wrapper">
+            <div class="xbox">
+              <div data-appui="venuemap"
+                  data-appui-target="venue-mapbox"
+                  tal:define="context_url context/absolute_url;
+                              mapsource python:context_url + '/@@geojson-view'"
+                  tal:attributes="data-appui-source mapsource;">
+                  <div id="venue-mapbox" class="mapbox-large">
+                      <!--MapBox Content -->
+                  </div>
+              </div>
+          </div>
+        </div>
+    </section>
 
-      <div id="map-wrapper">
+      <!--<div id="map-wrapper">
         <p><strong>Placeholder div for map content</strong></p>
         <metal:use metal:use-macro="context/@@collectivegeo-macros/map-widget" />
         <script type="text/javascript"
           tal:attributes="src string:++resource++geo.kml.javascripts/kml_openlayers.js">
         </script>
-      </div>
+      </div>-->
 
       <section id="keyword-selector"
         tal:define="keywords view/keywords">

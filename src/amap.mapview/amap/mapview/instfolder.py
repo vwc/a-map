@@ -1,3 +1,4 @@
+import json
 from five import grok
 from zope.component import getUtility
 from plone.directives import dexterity, form
@@ -10,6 +11,8 @@ from plone.i18n.normalizer.interfaces import IIDNormalizer
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 
 from collective.geo.geographer.interfaces import IGeoreferenced
+
+from amap.mapview.vocabulary import color_codes
 from amap.mapview.interfaces import IMapViewLayer
 from amap.mapview.institution import IInstitution
 
@@ -50,8 +53,31 @@ class View(grok.View):
             mark = {'location': '%s, %s, 0.000000' % (coords[0], coords[1])}
             mark['title'] = item.Title
             mark['description'] = item.Description
+            mark['keywords'] = item.Subject
             data.append(mark)
         return data
+
+    def geojson_data(self):
+        markers = list()
+        items = self.get_data()
+        for item in items:
+            marker = {}
+            geodata = IGeoreferenced(item.getObject())
+            coords = geodata.coordinates
+            geometry = {'coordinates': [coords[0], coords[1]]}
+            properties = {
+                'marker-color': '#545454',
+                'marker-symbol': 'circle-stroked',
+                'title': item.Title,
+                'description': item.Description
+            }
+            marker['type'] = 'Feature'
+            marker['geometry'] = geometry
+            marker['properties'] = properties
+            markers.append(marker)
+        geojson = {'type': 'FeatureCollection',
+                   'features': markers}
+        return geojson
 
     def subitems(self):
         context = aq_inner(self.context)
@@ -81,6 +107,63 @@ class View(grok.View):
                                depth=1),)
         if subject:
             query['Subject'] = subject
+        results = catalog(**query)
+        return results
+
+
+class GeoJsonView(grok.View):
+    grok.context(IInstFolder)
+    grok.require('zope2.View')
+    grok.name('geojson-view')
+
+    def update(self):
+        self.searchkey = self.request.get('subject', None)
+
+    def render(self):
+        self.request.response.setHeader('Content-Type',
+                                        'application/json; charset=utf-8')
+        return json.dumps(self.geojson_data(), indent=4)
+
+    def geojson_data(self):
+        markers = list()
+        items = self.get_data()
+        for item in items:
+            marker = {}
+            geodata = IGeoreferenced(item.getObject())
+            coords = geodata.coordinates
+            geometry = {'coordinates': [coords[0], coords[1]]}
+            marker_color = self.color_code(item.getObject().organizer)
+            properties = {
+                'marker-color': marker_color,
+                'marker-symbol': 'circle-stroked',
+                'image': '/++theme++amap.sitetheme/images/icon_hand.png',
+                'title': item.Title,
+                'description': item.Description,
+                'url': item.getURL()
+            }
+            marker['type'] = 'Feature'
+            marker['geometry'] = geometry
+            marker['properties'] = properties
+            markers.append(marker)
+        geojson = {'type': 'FeatureCollection',
+                   'features': markers}
+        return geojson
+
+    def color_code(self, key):
+        vocabulary = color_codes()
+        code = '#545454'
+        if vocabulary[key]:
+            code = vocabulary[key]
+        return code
+
+    def get_data(self):
+        context = aq_inner(self.context)
+        catalog = getToolByName(context, 'portal_catalog')
+        query = dict(object_provides=IInstitution.__identifier__,
+                     path=dict(query='/'.join(self.context.getPhysicalPath()),
+                               depth=2),)
+        if self.searchkey:
+            query['Subject'] = self.searchkey
         results = catalog(**query)
         return results
 
