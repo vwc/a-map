@@ -51,6 +51,10 @@
 	        <!-- Document Content -->
 	        <replace css:content-children="#content" css:theme-children="#content" />
 	        <copy css:content="#edit-bar" css:theme="#editbar" />
+	        <drop css:theme="#editbar-wrapper"
+            css:if-content="#anon-personalbar" />
+            <replace css:theme="#editbar-wrapper"
+            css:content="#toolbar" />
 	        <before css:content=".portalMessage" css:theme="#content" />
 	        <drop css:content=".documentActions" />
 	        
