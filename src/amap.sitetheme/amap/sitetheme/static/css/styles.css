@@ -304,11 +304,10 @@ html, body {
 /* @group Splash Boxes */
 
 #rightbar {
-    margin-top: 57px;
+    margin-top: 20px;
 }
 
 #portlets {
-    margin-top: 40px;
 }
 
 #portlets .portletStaticText p {
@@ -331,6 +330,30 @@ html, body {
 }
 
 /* @ end */
+
+.typeicon {
+    width: 64px;
+    height: 64px;
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+}
+
+.icon-family {
+    background:url(../images/icon-family.png) no-repeat 0 0 transparent;
+}
+
+#keyword-selector li {
+    list-style: none;
+    float: left;
+    display: block;
+}
+
+#keyword-selector li a {
+    text-decoration: none;
+    border: none;
+}
+
 
 /* @group Content Area */
 
@@ -515,7 +538,7 @@ dl.portlet ol {
 	margin-top: -0.5em;
 	color: gray;
 }
-414142
+
 #content .discreet,
 #sidebar .discreet {
 	color: #666;

@@ -5,6 +5,13 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="amap.mapview">
+<head>
+  <metal:block metal:fill-slot="javascript_head_slot">
+    <!--<metal:use metal:use-macro="context/@@collectivegeo-macros/openlayers" />-->
+    <script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.6/mapbox.js'></script>
+    <link href='http://api.tiles.mapbox.com/mapbox.js/v0.6.6/mapbox.css' rel='stylesheet' />
+  </metal:block>
+</head>
 <body>
 
 <metal:main fill-slot="main">
@@ -14,6 +21,10 @@
     </div>
     <div class="documentDescription description">
       <div tal:content="context/summary">Description</div>
+    </div>
+    <div class="type">
+      <p tal:content="context/organizer"
+        tal:attributes="class string:typeicon icon-${context/organizer}" />
     </div>
     <br>
     <tal:block tal:condition="context/job1">
@@ -33,7 +44,6 @@
                     <p tal:define="location context/location" tal:content="location">anprechpartner</p>
                     <p tal:condition="context/phone" tal:define="phone context/phone" tal:content="string:Telefon: $phone">anprechpartner</p>
                     <p tal:condition="context/fax" tal:define="fax context/fax" tal:content="string:Fax: $fax">anprechpartner</p>
-                    <p tal:content="context/organizer" />
                 </div>
             </div>
             <div>
@@ -51,6 +61,17 @@
                 </div>
             </div>
        </div>
+    </div>
+    <div class="xbox">
+      <div data-appui="venuemap"
+          data-appui-target="venue-mapbox"
+          tal:define="context_url context/absolute_url;
+                      mapsource python:context_url + '/@@geojson-view'"
+          tal:attributes="data-appui-source mapsource;">
+          <div id="venue-mapbox" class="mapbox-large">
+              <!--MapBox Content -->
+          </div>
+      </div>
     </div>
 
   </metal:content-core>

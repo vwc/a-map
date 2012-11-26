@@ -1,12 +1,15 @@
+import json
+from Acquisition import aq_inner
 from five import grok
 from plone.directives import dexterity, form
-
 from zope import schema
 from plone.indexer.decorator import indexer
-
 from plone.namedfile.interfaces import IImageScaleTraversable
-
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
+
+from collective.geo.geographer.interfaces import IGeoreferenced
+
+from amap.mapview.vocabulary import color_codes
 
 from amap.mapview import MessageFactory as _
 
@@ -86,6 +89,48 @@ class View(grok.View):
     grok.context(IInstitution)
     grok.require('zope2.View')
     grok.name('view')
+
+
+class GeoJsonView(grok.View):
+    grok.context(IInstitution)
+    grok.require('zope2.View')
+    grok.name('geojson-view')
+
+    def render(self):
+        self.request.response.setHeader('Content-Type',
+                                        'application/json; charset=utf-8')
+        return json.dumps(self.geojson_data(), indent=4)
+
+    def geojson_data(self):
+        context = aq_inner(self.context)
+        markers = list()
+        marker = {}
+        geodata = IGeoreferenced(context)
+        coords = geodata.coordinates
+        geometry = {'coordinates': [coords[0], coords[1]]}
+        marker_color = self.color_code(context.organizer)
+        properties = {
+            'marker-color': marker_color,
+            'marker-symbol': 'circle',
+            'image': '/++theme++amap.sitetheme/images/icon_hand.png',
+            'title': context.Title(),
+            'description': context.Description(),
+            'url': context.absolute_url()
+        }
+        marker['type'] = 'Feature'
+        marker['geometry'] = geometry
+        marker['properties'] = properties
+        markers.append(marker)
+        geojson = {'type': 'FeatureCollection',
+                   'features': markers}
+        return geojson
+
+    def color_code(self, key):
+        vocabulary = color_codes()
+        code = '#545454'
+        if key is not None and vocabulary[key]:
+            code = vocabulary[key]
+        return code
 
 
 @indexer(IInstitution)

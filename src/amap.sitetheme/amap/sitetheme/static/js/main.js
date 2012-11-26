@@ -24,7 +24,7 @@
                 m.addLayer(markerLayer).setExtent(markerLayer.extent());
                 interaction.formatter(function(feature) {
                     var o = '<h3><a target="_blank" href="' + feature.properties.url + '">' + feature.properties.title + '</a></h3>' +
-                        '<p>' + feature.properties.decription + '</p>';
+                        '<p>' + feature.properties.description + '</p>';
                     return o;
                 });
                 m.ui.zoomer.add();
@@ -32,7 +32,7 @@
                 m.centerzoom({
                     lat: features[0].geometry.coordinates[1],
                     lon: features[0].geometry.coordinates[0]
-                }, 11);
+                }, 13);
             });
         });
     });

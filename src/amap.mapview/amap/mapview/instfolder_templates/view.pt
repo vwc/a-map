@@ -26,37 +26,47 @@
               <div data-appui="venuemap"
                   data-appui-target="venue-mapbox"
                   tal:define="context_url context/absolute_url;
-                              mapsource python:context_url + '/@@geojson-view'"
+                              filter view/searchkey;
+                              url python:context_url + '/@@geojson-view';
+                              mapsource python:filter and url + '?filter=' + filter or url"
                   tal:attributes="data-appui-source mapsource;">
                   <div id="venue-mapbox" class="mapbox-large">
                       <!--MapBox Content -->
                   </div>
               </div>
+            </div>
           </div>
         </div>
     </section>
-
-      <!--<div id="map-wrapper">
-        <p><strong>Placeholder div for map content</strong></p>
-        <metal:use metal:use-macro="context/@@collectivegeo-macros/map-widget" />
-        <script type="text/javascript"
-          tal:attributes="src string:++resource++geo.kml.javascripts/kml_openlayers.js">
-        </script>
-      </div>-->
-
+    <div class="visualClear">&nbsp;</div>
       <section id="keyword-selector"
         tal:define="keywords view/keywords">
+        <div tal:define="filter request/filter | nothing"
+          tal:condition="filter">
+          <a href="" tal:attributes="href context/absolute_url">
+            Filter entfernen</a>
+        </div>
         <ul>
           <tal:keys tal:repeat="key keywords">
-            <li tal:define="klass python:view.keyword_normalizer(key)"
-              tal:attributes="class klass">
+            <li tal:define="klass python:view.keyword_normalizer(key)">
               <a href="#" tal:content="key" 
                  tal:define="context_url context/absolute_url" 
-                 tal:attributes="href python:context_url + '/@@view?subject=' + key" />
+                 tal:attributes="href python:context_url + '/@@view?filter=' + key;
+                                 class klass" />
             </li>
           </tal:keys>
         </ul>
       </section>
+
+      <section id="result-list" class="visualClear">
+        <tal:block tal:repeat="item view/result_listing">
+          <h4 tal:content="item/title" />
+          <p tal:content="item/description" />
+          <p><a href="" tal:attributes="href item/url">
+            anzeigen</a></p>
+        </tal:block>
+      </section>
+
     </article>
   </metal:content-core>
 </metal:main>
