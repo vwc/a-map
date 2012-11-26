@@ -22,3 +22,7 @@ var
 *.pyc
 *.pyo
 etc/**/*
+src/vwc.toolbar
+src/collective.geo.behaviour
+src/collective.geo.kml
+src/collective.z3cform.mapwidget
