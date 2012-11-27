@@ -30,7 +30,7 @@ class InstitutionTypeVocabulary(object):
                  _(u"Family"): 'family'}
 
         return SimpleVocabulary([SimpleTerm(value, title=title)
-                                 for title, value in TYPES.itertypes()])
+                                 for title, value in TYPES.iteritems()])
 
 grok.global_utility(InstitutionTypeVocabulary,
                     name=u"amap.mapview.InstitutionTypes")

@@ -1,0 +1,269 @@
+// Application styles
+// -------------------
+
+// @import "cmsui.less";
+
+#toolbar + #outer-wrapper {
+    padding-top: @navbarHeight;
+}
+
+#top-wrapper {
+    border-top: 10px solid #2b7c96;
+    background: #fff;
+    #header {
+        background: url(../images/header_bg.png) -29px -10px no-repeat transparent;
+    }
+    #logo {
+        background: url(../images/logo.png) 0px 0px no-repeat transparent;
+        width: 276px;
+        height:210px;
+        display: block;
+        text-indent: -3000px;
+        overflow: hidden;
+        border: none;
+    }
+    #nav-head {
+        height: 125px;
+        border-bottom: 1px solid #999;
+        margin-left: 0px;
+    }
+    
+    #portal-globalnav,
+    #main-nav {
+        margin-top:10px;
+        border-top: 1px solid #999;
+        border-bottom: 1px solid #999;
+        //padding: @paddingSmall;
+        margin-left: -15px;
+        min-height: @baseLineHeight;
+    }
+    #main-nav li {
+        display: inline-block;
+        //float: left;
+        list-style: none;
+    }
+    #portal-globalnav li a,
+    #main-nav li a {
+        display: inline-block;
+        text-transform: uppercase;
+        color: #999;
+        font-size: @baseFontSize + 4;
+        padding: 3px 10px;
+        font-weight:bold;
+    }
+    
+    #portal-globalnav .selected a,
+    #main-nav .selected a,
+    #portal-globalnav a:hover,
+    #main-nav a:hover {
+        background: #2b7c96;
+        color: White;
+    }
+    
+    #social-connection {
+        background: url(../images/share.png) 93% 4px no-repeat transparent;
+        margin-top: 10px;    
+        height: 44px;
+        text-align: right;
+    }
+}
+
+#searchbar {
+    padding: @baseLineHeight;
+    margin: 0 0 @baseLineHeight @baseLineHeight;
+}
+
+#search {
+    border: 10px solid #e3e3e3;
+    #search-site {
+        background: #fff;
+        height: 28px;
+        width: 157px;
+        margin: 0px;
+    }
+    .searchButton {
+        background: url(../images/icon-search.png) no-repeat 0px 0px #fff;
+        border: 0px solid #333;
+        color: #000;
+        font-family: Arial, sans-serif;
+        font-weight: normal;
+        font-size: 0.8em;
+        text-transform: uppercase;
+        width: 27px;
+        height: 24px;
+        text-align: right;
+        text-indent: -3000px;
+        overflow: hidden;
+        display: inline-block;
+    }
+}
+
+// Main content
+
+#content {
+    color: #666;
+    font-family: Helvetica, sans-serif;
+    padding-top: @baseLineHeight;
+}
+
+#venue-map-wrapper {
+    padding: @baseLineHeight 0;
+}
+
+#venue-mapbox {
+    width: 700px;
+    height: 450px;
+    border: 1px solid #ccc;
+    .center-block();
+    &.mapbox-large {
+        /*.size(500px, 940px);*/
+        width: 920px;
+        height: 400px;
+    }
+    .marker-popup {
+        font-size: 10px;
+        line-height: 110%;
+    }
+}
+
+.typeicon {
+    width: 64px;
+    height: 64px;
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+}
+
+.icon-seniors {
+    background:url(../images/icon-seniors.png) no-repeat 0 0 transparent;
+}
+.icon-sport {
+    background:url(../images/icon-sports.png) no-repeat 0 0 transparent;
+}
+.icon-education {
+    background:url(../images/icon-education.png) no-repeat 0 0 transparent;
+}
+.icon-neighborhood {
+    background:url(../images/icon-neighborhood.png) no-repeat 0 0 transparent;
+}
+.icon-social {
+    background:url(../images/icon-social.png) no-repeat 0 0 transparent;
+}
+.icon-culture {
+    background:url(../images/icon-culture.png) no-repeat 0 0 transparent;
+}
+.icon-services {
+    background:url(../images/icon-service.png) no-repeat 0 0 transparent;
+}
+.icon-youth {
+    background:url(../images/icon-youth.png) no-repeat 0 0 transparent;
+}
+.icon-family {
+    background:url(../images/icon-family.png) no-repeat 0 0 transparent;
+}
+
+#keyword-selector li {
+    list-style: none;
+    float: right;
+    display: block;
+    margin: 0px 0px @baseLineHeight / 2 @baseLineHeight / 2;
+}
+
+#keyword-selector li a {
+    text-decoration: none;
+    border: none;
+}
+
+#filter-clear {
+    .pull-right();
+}
+
+
+#footer-wrapper {
+/* Sticky footer */
+border: 1px solid white;
+    background: url(../images/footer.png) -140px 0px no-repeat transparent;
+    height:177px;
+}
+
+#footer {
+    margin-top:177px;
+    color: White;
+    background: #2b7c96;
+    font-family: Georgia, Helvetica, FreeSans, sans-serif;
+    padding: @baseLineHeight @baseLineHeight / 2;
+}
+
+#footer-info {
+    margin: 0 auto;
+}
+
+#footer p {
+    font-size: 0.7em;
+}
+
+#footer-nav {
+    text-align:right;
+
+    ul li {
+        float:left;
+        display: block;
+    }
+}
+
+#footer-nav li a {
+    color: #FFF;
+    padding: 0 5px;
+    font-weight:bold;
+}
+
+#foerderleiste {
+ /*   background: url(../images/foerderlogoleiste.png) 0px 0px no-repeat transparent;*/
+    margin-top: 15px;
+    //float:left;
+    width: 940px;
+    height: 162px;
+    display:block;
+    overflow:hidden;
+    border:none;
+    margin-bottom: @baseLineHeight;
+}
+
+#foerderleiste hr {
+    background-color: #32438b; /* Farbe für Opera und Firefox */ 
+    color: #32438b; /* Farbe für Internet Explorer (IE) */
+    border: 0; 
+    height: 2px;
+    
+}
+.leiste td {
+    height:70px;
+
+
+}
+
+.leiste a{
+    height:70px;
+    display:block;
+    text-indent: -3000px;
+    overflow: hidden;
+    border: none;
+}
+#BMFJA {
+    background: url(../images/BMFJA.png) 0px 0px no-repeat transparent;
+    width:150px;
+}
+#esf {
+    background: url(../images/ESF.png) 0px 0px no-repeat transparent;
+    width:180px;
+}
+#staerken {
+    background: url(../images/StaerkenvorOrt.png) 0px 0px no-repeat transparent;
+    width:250px;
+}
+#eu {
+    background: url(../images/eu.png) 0px 0px no-repeat transparent;
+    width:200px;
+}
+
+

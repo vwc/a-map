@@ -1,6 +1,8 @@
 import json
 from five import grok
 from zope.component import getUtility
+from zope.schema.vocabulary import getVocabularyRegistry
+
 from plone.directives import dexterity, form
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
@@ -53,7 +55,7 @@ class View(grok.View):
             mark = {'location': '%s, %s, 0.000000' % (coords[0], coords[1])}
             mark['title'] = item.Title
             mark['description'] = item.Description
-            mark['url'] = item.absolute_url()
+            mark['url'] = item.getURL()
             mark['keywords'] = item.Subject
             data.append(mark)
         return data
@@ -65,6 +67,20 @@ class View(grok.View):
                           path='/'.join(context.getPhysicalPath()),
                           sort_on='sortable_title')
         return results
+
+    def venue_types(self):
+        context = aq_inner(self.context)
+        vr = getVocabularyRegistry()
+        vocabulary = vr.get(context, 'amap.mapview.InstitutionTypes')
+        context_url = context.absolute_url()
+        data = []
+        for entry in vocabulary:
+            item = {}
+            term = entry.value
+            item['klass'] = 'typeicon icon-' + term
+            item['url'] = context_url + '?filter=' + term
+            data.append(item)
+        return data
 
     def keywords(self):
         context = aq_inner(self.context)

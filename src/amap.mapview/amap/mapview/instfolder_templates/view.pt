@@ -20,8 +20,8 @@
       <h1 class="documentFirstHeading" tal:content="context/Title" />
 
       <section id="content-core">
-        <div class="row">
-          <div class="span12" id="venue-map-wrapper">
+        <div class="row-fluid">
+          <div class="span9">
             <div class="xbox">
               <div data-appui="venuemap"
                   data-appui-target="venue-mapbox"
@@ -30,33 +30,37 @@
                               url python:context_url + '/@@geojson-view';
                               mapsource python:filter and url + '?filter=' + filter or url"
                   tal:attributes="data-appui-source mapsource;">
-                  <div id="venue-mapbox" class="mapbox-large">
+                  <div id="venue-mapbox">
                       <!--MapBox Content -->
                   </div>
               </div>
             </div>
           </div>
+          <div class="span3">
+            <section id="keyword-selector">
+              <ul>
+                <tal:keys tal:repeat="item view/venue_types">
+                  <li tal:define="klass item/klass">
+                    <a href="#" tal:content="item"
+                       tal:attributes="href item/url;
+                                       class klass" />
+                  </li>
+                </tal:keys>
+              </ul>
+              <div tal:define="filter request/filter | nothing"
+                tal:condition="filter"
+                class="visualClear"
+                id="filter-clear">
+                <a href="" tal:attributes="href context/absolute_url"
+                  class="btn">
+                  Filter entfernen</a>
+              </div>
+            </section>
+          </div>
         </div>
     </section>
     <div class="visualClear">&nbsp;</div>
-      <section id="keyword-selector"
-        tal:define="keywords view/keywords">
-        <div tal:define="filter request/filter | nothing"
-          tal:condition="filter">
-          <a href="" tal:attributes="href context/absolute_url">
-            Filter entfernen</a>
-        </div>
-        <ul>
-          <tal:keys tal:repeat="key keywords">
-            <li tal:define="klass python:view.keyword_normalizer(key)">
-              <a href="#" tal:content="key" 
-                 tal:define="context_url context/absolute_url" 
-                 tal:attributes="href python:context_url + '/@@view?filter=' + key;
-                                 class klass" />
-            </li>
-          </tal:keys>
-        </ul>
-      </section>
+
 
       <section id="result-list" class="visualClear">
         <tal:block tal:repeat="item view/result_listing">
