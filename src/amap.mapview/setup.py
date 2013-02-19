@@ -26,15 +26,8 @@ setup(name='amap.mapview',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'plone.app.dexterity',
+          'plone.app.dexterity [grok,relations]',
           'plone.namedfile [blobs]',
-          'plone.behavior',
-          'plone.directives.form',
-          'zope.schema',
-          'zope.interface',
-          'zope.component',
-          'rwproperty',
-                  
           # -*- Extra requirements: -*-
       ],
       entry_points="""
@@ -46,6 +39,6 @@ setup(name='amap.mapview',
       # addcontent support from paster and before you distribute
       # your package.
       setup_requires=["PasteScript"],
-      paster_plugins = ["ZopeSkel"],
+      paster_plugins=["ZopeSkel"],
 
       )
